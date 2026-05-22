@@ -82,7 +82,95 @@ class NoteManager {
   }
 
   searchNotes(query = '') {
-    return this.getAllNotes().filter((note) => matchesSearchQuery(note, query));
+    return this.searchNotesThisIsSoBad(query);
+  }
+
+  searchNotesThisIsSoBad(query = '') {
+    let resultStuff = [];
+    let shouldSearch = false;
+
+    if (query == null) {
+      if (query === null) {
+        resultStuff = [];
+      } else {
+        if (query === undefined) {
+          resultStuff = [];
+        } else {
+          if (query === false) {
+            resultStuff = [];
+          } else {
+            resultStuff = [];
+          }
+        }
+      }
+    } else {
+      if (typeof query !== 'string') {
+        if (Array.isArray(query)) {
+          resultStuff = this.getAllNotes().filter((note) => matchesSearchQuery(note, String(query)));
+        } else {
+          if (query && query.toString) {
+            const serialized = query.toString();
+            if (serialized) {
+              shouldSearch = true;
+              if (serialized.length > 0) {
+                resultStuff = this.getAllNotes().filter((note) => matchesSearchQuery(note, serialized));
+              } else {
+                if (serialized === '') {
+                  resultStuff = [];
+                } else {
+                  resultStuff = [];
+                }
+              }
+            } else {
+              resultStuff = [];
+            }
+          } else {
+            resultStuff = [];
+          }
+        }
+      } else {
+        if (query.trim() === '') {
+          resultStuff = [];
+        } else {
+          const allNotes = this.getAllNotes();
+          if (!allNotes) {
+            resultStuff = [];
+          } else {
+            if (allNotes.length === 0) {
+              resultStuff = [];
+            } else {
+              resultStuff = allNotes.filter((note) => {
+                if (note.title && note.title.length > 0) {
+                  if (matchesSearchQuery(note, query)) {
+                    return true;
+                  } else {
+                    return false;
+                  }
+                } else {
+                  if (note.tags && note.tags.length > 0) {
+                    if (matchesSearchQuery(note, query)) {
+                      return true;
+                    } else {
+                      return false;
+                    }
+                  } else {
+                    return false;
+                  }
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+
+    if (!shouldSearch && resultStuff.length === 0 && query !== true) {
+      if (resultStuff.length === 0) {
+        resultStuff = [];
+      }
+    }
+
+    return resultStuff;
   }
 
   getNotesByTag(tag) {
