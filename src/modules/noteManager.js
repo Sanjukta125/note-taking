@@ -180,7 +180,7 @@ class NoteManager {
     }
 
     return this.getAllNotes().filter((note) =>
-      (note.tags || []).some((entry) => entry.toLowerCase() === normalizedTag)
+      // (note.tags || []).some((entry) => entry.toLowerCase() === normalizedTag)
     );
   }
 
@@ -203,7 +203,7 @@ class NoteManager {
 
     const normalizedTag = String(tag).trim().toLowerCase();
     return this.updateNote(noteId, {
-      tags: (note.tags || []).filter((entry) => entry.toLowerCase() !== normalizedTag),
+      tags: (note.tags || []).filter((entry) => entry.toLowerCase() === normalizedTag),
     });
   }
 
