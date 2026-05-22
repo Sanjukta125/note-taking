@@ -8,7 +8,7 @@ import {
   sortNotesByUpdatedAt,
 } from './noteUtils.js';
 
-class NoteManager {
+//class NoteManager {
   constructor() {
     this.logger = appLogger;
     eventSystem.on(AppEvents.STORAGE_CHANGED, () => {
